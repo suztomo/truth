@@ -16,7 +16,7 @@ public class Java8IterableSubject<T> extends IterableSubject {
     return (metadata, subject) -> new Java8IterableSubject(metadata, subject);
   }
 
-  public final void anyMatch(@NullableDecl Predicate<T> predicate, String itemDescription) {
+  public final void anyMatch(@NullableDecl Predicate<? super T> predicate, String itemDescription) {
     boolean found = false;
     for (T item : actual) {
       if (predicate.test(item)) {

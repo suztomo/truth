@@ -20,6 +20,7 @@ import static com.google.common.truth.Truth8.assertThat;
 
 import com.google.common.collect.ImmutableList;
 import java.math.BigInteger;
+import java.util.function.Predicate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -28,6 +29,7 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public final class Java8IterableSubjectTest {
 
+
   @Test
   public void testAnyMatchSuccess() throws Exception {
     ImmutableList<BigInteger> list =
@@ -35,6 +37,18 @@ public final class Java8IterableSubjectTest {
 
     Truth8.assertThat(list).anyMatch(item -> item.bitCount() > 1, "item.bigCount > 1");
   }
+
+  public static final Predicate<Object> predicateOnObject = item -> item.hashCode() != 0;
+
+  @Test
+  public void testAnyMatchPredicateOnSuperClass() throws Exception {
+    ImmutableList<BigInteger> list =
+        ImmutableList.of(BigInteger.valueOf(1), BigInteger.valueOf(2), BigInteger.valueOf(3));
+
+    // anyMatch's first argument Predicate<? super T> allows this.
+    Truth8.assertThat(list).anyMatch(predicateOnObject, "item.hashCode != 0");
+  }
+
 
   @Test
   public void testAnyMatchFail() throws Exception {
