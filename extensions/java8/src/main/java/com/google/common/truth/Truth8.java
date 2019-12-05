@@ -72,6 +72,10 @@ public final class Truth8 {
     return assertAbout(LongStreamSubject.longStreams()).that(target);
   }
 
+  public static <T> Java8IterableSubject<T> assertThat(@NullableDecl Iterable<T> target) {
+    return assertAbout(Java8IterableSubject.<T>iterables()).that(target);
+  }
+
   // TODO(b/64757353): Add support for DoubleStream?
 
   // Not actually a Java 8 feature, but for now this is the best option since core Truth still has
