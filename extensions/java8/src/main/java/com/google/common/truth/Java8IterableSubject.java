@@ -1,6 +1,5 @@
 package com.google.common.truth;
 
-
 import java.util.function.Predicate;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
@@ -10,6 +9,12 @@ public class Java8IterableSubject<T> extends IterableSubject {
   protected Java8IterableSubject(FailureMetadata metadata, @NullableDecl Iterable<T> iterable) {
     super(metadata, iterable);
     actual = iterable;
+  }
+
+  public <E> UsingCorrespondence<T, E> comparingWith(
+      Correspondence<? super T, ? super E> correspondence) {
+    // The name comparingElementUsing conflicts with parent class's implementation
+    return new UsingCorrespondence<>(this, correspondence);
   }
 
   public static <U> Subject.Factory<Java8IterableSubject<U>, Iterable<U>> iterables() {
